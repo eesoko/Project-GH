@@ -1,0 +1,111 @@
+디버깅 앱.
+
+package com.example.geunhwang.presentation
+
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.wear.compose.material.MaterialTheme
+import androidx.wear.compose.material.Text
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import java.math.RoundingMode
+import java.text.DecimalFormat
+
+class MainActivity : ComponentActivity(), SensorEventListener {
+
+    private lateinit var sensorManager: SensorManager
+    private var accelerometer: Sensor? = null
+    private var gyroscope: Sensor? = null
+
+    // UI 표시를 위한 변수들
+    private val _accelValue = MutableStateFlow("Accel: 0, 0, 0")
+    val accelValue: StateFlow<String> = _accelValue
+    private val _gyroValue = MutableStateFlow("Gyro: 0, 0, 0")
+    val gyroValue: StateFlow<String> = _gyroValue
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        setContent {
+            val accel by accelValue.collectAsState()
+            val gyro by gyroValue.collectAsState()
+            SensorDebugScreen(accelText = accel, gyroText = gyro)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        accelerometer?.also { accel ->
+            sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_GAME)
+        }
+        gyroscope?.also { gyro ->
+            sensorManager.registerListener(this, gyro, SensorManager.SENSOR_DELAY_GAME)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.DOWN
+
+        when (event?.sensor?.type) {
+            Sensor.TYPE_ACCELEROMETER -> {
+                val ax = event.values[0]
+                val ay = event.values[1]
+                val az = event.values[2]
+                val accelLog = "Accel X: ${df.format(ax)}, Y: ${df.format(ay)}, Z: ${df.format(az)}"
+                Log.d("SquatData", accelLog)
+                _accelValue.value = accelLog
+            }
+            Sensor.TYPE_GYROSCOPE -> {
+                val gx = event.values[0]
+                val gy = event.values[1]
+                val gz = event.values[2]
+                val gyroLog = "Gyro X: ${df.format(gx)}, Y: ${df.format(gy)}, Z: ${df.format(gz)}"
+                Log.d("SquatData", gyroLog)
+                _gyroValue.value = gyroLog
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+}
+
+@Composable
+fun SensorDebugScreen(accelText: String, gyroText: String) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "스쿼트 데이터 수집", fontSize = 24.sp)
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = accelText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(text = gyroText, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+    }
+}

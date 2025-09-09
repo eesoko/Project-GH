@@ -1,9 +1,0 @@
-cd "C:\Users\dltjr\AppData\Local\Android\Sdk\platform-tools"
-
-.\adb kill-server
-
-.\adb start-server
-
-PS C:\Users\dltjr\AppData\Local\Android\Sdk\platform-tools> .\adb.exe connect 172.24.65.109:42543
-
-.\adb.exe connect 172.24.65.109:42543

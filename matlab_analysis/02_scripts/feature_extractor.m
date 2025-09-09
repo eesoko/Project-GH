@@ -1,17 +1,22 @@
-% feature_extractor.m - 지정 폴더 저장 및 시간 기록 기능만 적용
+% feature_extractor.m - PC/노트북 호환되는 동적 경로 버전
 
 clear; clc;
 
-% ==========================================================
-% >> 저장될 위치 (고정 경로)
-output_folder = 'C:\Users\SeokHoLee\Desktop\GIt\GH\matlab_analysis\01_data\processed';
-% ==========================================================
+% =========================================================================
+% >> 저장될 위치 (동적 상대 경로)
+% 현재 스크립트(.m)가 있는 위치를 기준으로 경로를 설정합니다.
+[current_script_path, ~, ~] = fileparts(mfilename('fullpath'));
+% 스크립트 위치(.../02_scripts)에서 한 단계 위로 올라간 뒤(.../matlab_analysis), 
+% '01_data/processed' 폴더로 경로를 지정합니다.
+output_folder = fullfile(current_script_path, '..', '01_data', 'processed');
+% =========================================================================
 
 % --- 1. 데이터 폴더 선택 ---
-input_folder = uigetdir('', 'Select the folder containing CSV files');
+input_folder = uigetdir(current_script_path, 'Select the folder containing CSV files');
 if isequal(input_folder, 0), disp('User selected Cancel'); return; end
 
 % --- 2. CSV 파일 목록 가져오기 ---
+% (이하 모든 코드는 이전과 동일합니다)
 csv_files = dir(fullfile(input_folder, '*.csv'));
 if isempty(csv_files), disp('No CSV files found.'); return; end
 
@@ -25,7 +30,6 @@ for i = 1:length(csv_files)
     fprintf('Processing: %s\n', file_name);
     
     try
-        % (대표님의 핵심 특징 추출 로직은 그대로 유지됩니다)
         dataTable = readtable(full_path);
         sensorData = [dataTable.ax, dataTable.ay, dataTable.az, ...
                       dataTable.gx, dataTable.gy, dataTable.gz];
@@ -78,11 +82,9 @@ end
 
 % --- 4. 결과 저장 ---
 if ~isempty(feature_table)
-    % 현재 시간을 이용해 파일명 생성
     timestamp = datestr(now, 'yyyy-mm-dd_HHMMSS');
     output_filename = ['feature_table_', timestamp, '.csv'];
     
-    % 지정된 경로에 파일 저장
     output_path = fullfile(output_folder, output_filename);
     writetable(feature_table, output_path);
     

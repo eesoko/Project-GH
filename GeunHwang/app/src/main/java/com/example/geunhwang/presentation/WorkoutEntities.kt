@@ -8,6 +8,8 @@ object ExerciseType {
     const val OVERHEAD_PRESS = "Overhead Press"
     const val PUSH_UP = "Push Up"
     const val SIDE_LATERAL_RAISE = "Side Lateral Raise"
+    const val LUNGE = "Lunge"
+    const val DUMBBELL_ROW = "Dumbbell Row"
 }
 enum class DumbbellCurlState {
     READY,

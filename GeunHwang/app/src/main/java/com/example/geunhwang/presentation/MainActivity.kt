@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape // 에러 해결 1: RoundedCornerShape import
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource // 에러 해결 2: painterResource import
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -15,13 +17,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState // 에러 해결 3: rememberScalingLazyListState import
+import androidx.wear.compose.material.* // 에러 해결 4: Icon 등 Material 컴포넌트를 위해 와일드카드 import
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.example.geunhwang.R // 에러 해결 5: R.drawable 리소스 사용을 위한 import
 import com.example.geunhwang.presentation.theme.GeunHwangTheme
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -43,8 +44,6 @@ class MainActivity : ComponentActivity() {
 fun WearAppNavigation(viewModel: MainViewModel) {
     val navController = rememberSwipeDismissableNavController()
     val repCount by viewModel.repCount.collectAsState()
-
-    // --- 1. ViewModel로부터 '오늘의 운동' 목록을 실시간으로 받아옵니다. ---
     val todaySets by viewModel.todaySets.collectAsState()
 
     SwipeDismissableNavHost(
@@ -52,34 +51,30 @@ fun WearAppNavigation(viewModel: MainViewModel) {
         startDestination = "main_screen"
     ) {
         composable("main_screen") {
+            // --- ▼▼▼ 수정된 부분 1: MainScreen 호출 방식 변경 ▼▼▼ ---
             MainScreen(
-                onDumbbellCurlClick = {
-                    viewModel.setDataCollectionMode(false)
-                    viewModel.onExerciseSelected(ExerciseType.DUMBBELL_CURL)
-                    navController.navigate("counter_screen/${ExerciseType.DUMBBELL_CURL}")
+                // "오늘의 운동 기록" 버튼을 누르면 해당 화면으로 이동하도록 연결
+                onNavigateToTodayWorkout = {
+                    navController.navigate("today_workout_screen")
                 },
-                onSquatClick = {
-                    viewModel.setDataCollectionMode(false)
-                    viewModel.onExerciseSelected(ExerciseType.SQUAT)
-                    navController.navigate("counter_screen/${ExerciseType.SQUAT}")
-                },
-                onDataCollectionClick = {
-                    viewModel.setDataCollectionMode(true)
+                // "데이터 수집" 버튼을 누르면 해당 화면으로 이동하도록 연결
+                onNavigateToDataCollection = {
+                    viewModel.setDataCollectionMode(true) // 데이터 수집 모드 활성화
                     navController.navigate("collection_selection_screen")
                 },
-                // --- 2. '오늘의 운동 기록' 화면으로 이동하는 버튼에 대한 동작을 추가합니다. ---
-                onTodayWorkoutClick = {
-                    navController.navigate("today_workout_screen")
+                // "운동 시작" 버튼을 누르면 카운터 화면으로 이동하도록 연결
+                onNavigateToCounter = { exerciseType ->
+                    viewModel.setDataCollectionMode(false) // 카운팅 모드 활성화
+                    viewModel.onExerciseSelected(exerciseType)
+                    navController.navigate("counter_screen/$exerciseType")
                 }
             )
+            // --- ▲▲▲ 수정된 부분 1 ---
         }
 
-        // --- 3. '오늘의 운동 기록'을 보여줄 새로운 화면(Composable)을 추가합니다. ---
         composable("today_workout_screen") {
             TodayWorkoutScreen(sets = todaySets)
         }
-
-        // --- 이하 기존 화면들 ---
 
         composable("collection_selection_screen") {
             ExerciseSelectionScreen { exerciseName ->
@@ -104,57 +99,99 @@ fun WearAppNavigation(viewModel: MainViewModel) {
             CounterScreen(
                 exerciseName = exerciseName,
                 count = repCount,
-                // --- 4. '세트 종료'와 '전체 운동 종료' 버튼에 ViewModel의 함수를 연결합니다. ---
                 onSetCompleteClick = {
                     viewModel.onSetComplete()
                 },
                 onEndWorkoutClick = {
                     viewModel.onWorkoutEnd()
-                    navController.popBackStack() // 메인 화면으로 복귀
+                    navController.popBackStack()
                 }
             )
         }
     }
 }
 
-// --- 👇👇 UI 컴포넌트(Composable 함수) 수정 및 추가 👇👇 ---
-
+// --- ▼▼▼ 수정된 부분 2: MainScreen 전체 재설계 ▼▼▼ ---
 @Composable
 fun MainScreen(
-    onDumbbellCurlClick: () -> Unit,
-    onSquatClick: () -> Unit,
-    onDataCollectionClick: () -> Unit,
-    onTodayWorkoutClick: () -> Unit // --- 5. 새로운 버튼을 위한 파라미터 추가 ---
+    onNavigateToTodayWorkout: () -> Unit,
+    onNavigateToDataCollection: () -> Unit,
+    onNavigateToCounter: (String) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // --- 6. '오늘의 운동 기록' 버튼을 새로 추가합니다. ---
-        Button(onClick = onTodayWorkoutClick, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue)) {
-            Text("오늘의 운동 기록")
-        }
+        Text("근황", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = onDumbbellCurlClick) { Text("덤벨 컬") }
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = onSquatClick) { Text("스쿼트") }
-        Spacer(modifier = Modifier.height(16.dp))
+
+        // 오늘의 운동 기록 버튼
         Button(
-            onClick = onDataCollectionClick,
+            onClick = onNavigateToTodayWorkout,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF0056B3))
+        ) {
+            // Row를 사용해 가로 정렬을 명확히 합니다.
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_history),
+                    contentDescription = "운동 기록"
+                )
+                Spacer(Modifier.width(8.dp)) // 아이콘과 텍스트 사이 간격
+                Text("운동 기록")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // 운동 시작 버튼
+        Button(
+            onClick = { onNavigateToCounter(ExerciseType.DUMBBELL_CURL) },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+        ) {
+            // Row를 사용해 가로 정렬을 명확히 합니다.
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_fitness),
+                    contentDescription = "운동 시작"
+                )
+                Spacer(Modifier.width(8.dp)) // 아이콘과 텍스트 사이 간격
+                Text("운동 시작")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // 데이터 수집 버튼
+        Button(
+            onClick = onNavigateToDataCollection,
+            modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray)
         ) {
-            Text("데이터 수집")
+            // Row를 사용해 가로 정렬을 명확히 합니다.
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_data_collect),
+                    contentDescription = "데이터 수집"
+                )
+                Spacer(Modifier.width(8.dp)) // 아이콘과 텍스트 사이 간격
+                Text("데이터 수집")
+            }
         }
     }
 }
+// --- ▲▲▲ 수정된 부분 2 ---
 
 @Composable
 fun CounterScreen(
     exerciseName: String,
     count: Int,
-    onSetCompleteClick: () -> Unit, // --- 7. '세트 종료' 버튼용 파라미터로 변경 ---
-    onEndWorkoutClick: () -> Unit // '전체 운동 종료' 버튼용 파라미터
+    onSetCompleteClick: () -> Unit,
+    onEndWorkoutClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -166,7 +203,6 @@ fun CounterScreen(
         Text(text = exerciseName, fontSize = 22.sp, textAlign = TextAlign.Center)
         Text(text = count.toString(), fontSize = 72.sp, fontWeight = FontWeight.Bold)
         Column {
-            // --- 8. '세트 종료' 버튼으로 기능을 변경합니다. ---
             Button(
                 onClick = onSetCompleteClick,
                 modifier = Modifier.fillMaxWidth()
@@ -185,7 +221,6 @@ fun CounterScreen(
     }
 }
 
-// --- 9. '오늘의 운동 기록'을 표시할 화면을 완전히 새로 만듭니다. ---
 @Composable
 fun TodayWorkoutScreen(sets: List<WorkoutSet>) {
     ScalingLazyColumn(
@@ -228,24 +263,44 @@ fun TodayWorkoutScreen(sets: List<WorkoutSet>) {
     }
 }
 
-
+// --- ▼▼▼ 수정된 부분 3: ExerciseSelectionScreen 재설계 ▼▼▼ ---
 @Composable
 fun ExerciseSelectionScreen(onExerciseSelected: (String) -> Unit) {
+    val listState = rememberScalingLazyListState() // 에러 해결 7: state 변수 추가
     ScalingLazyColumn(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp), // 버튼 사이 간격을 자동으로 조절
-        contentPadding = PaddingValues(vertical = 16.dp)
+        state = listState, // 에러 해결 8: state 연결
+        // 에러 해결 9: autoScrollToCentralItem -> autoCentering 파라미터로 변경 시도 (없으면 삭제)
+        // autoCentering = AutoCenteringParams(itemIndex = 0), // 라이브러리 버전에 따라 없을 수 있음
+        contentPadding = PaddingValues(top = 30.dp, bottom = 30.dp)
     ) {
         item { Text(text = "수집할 운동 선택", modifier = Modifier.padding(bottom = 8.dp)) }
 
-        // --- 👇👇 여기에 버튼들을 추가합니다 👇👇 ---
-        item { Button(onClick = { onExerciseSelected(ExerciseType.SQUAT) }) { Text("스쿼트") } }
-        item { Button(onClick = { onExerciseSelected(ExerciseType.OVERHEAD_PRESS) }) { Text("오버헤드 프레스") } }
-        item { Button(onClick = { onExerciseSelected(ExerciseType.PUSH_UP) }) { Text("푸시업") } }
-        item { Button(onClick = { onExerciseSelected(ExerciseType.SIDE_LATERAL_RAISE) }) { Text("사이드 레터럴 레이즈") } }
+        item { ExerciseButton(exerciseType = ExerciseType.SQUAT) { onExerciseSelected(it) } }
+        item { ExerciseButton(exerciseType = ExerciseType.OVERHEAD_PRESS) { onExerciseSelected(it) } }
+        item { ExerciseButton(exerciseType = ExerciseType.PUSH_UP) { onExerciseSelected(it) } }
+        item { ExerciseButton(exerciseType = ExerciseType.SIDE_LATERAL_RAISE) { onExerciseSelected(it) } }
+        item { ExerciseButton(exerciseType = ExerciseType.DUMBBELL_CURL) { onExerciseSelected(it) } }
+        item { ExerciseButton(exerciseType = ExerciseType.LUNGE) { onExerciseSelected(it) } }
+        item { ExerciseButton(exerciseType = ExerciseType.DUMBBELL_ROW) { onExerciseSelected(it) } }
     }
 }
+
+@Composable
+fun ExerciseButton(exerciseType: String, onClick: (String) -> Unit) {
+    Button(
+        onClick = { onClick(exerciseType) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        // 에러 해결 10: containerColor -> backgroundColor
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray),
+        shape = RoundedCornerShape(12.dp) // 모서리 둥글게
+    ) {
+        Text(exerciseType, fontSize = 16.sp)
+    }
+}
+// --- ▲▲▲ 수정된 부분 3 ---
 
 @Composable
 fun LoggingScreen(exerciseName: String, onStopLoggingClick: () -> Unit) {

@@ -1,22 +1,22 @@
-function features = feature_extractor_codegen(raw_data)
 % =========================================================================
 % [ SCRIPT ]    : feature_extractor_codegen.m
-% [ VERSION ]   : 2.1 (Coder-Friendly Version)
+% [ VERSION ]   : 2.2 (Fs as Input Version)
 % [ AUTHOR ]    : GeunHwang Project (Adapted by Gemini)
-% [ DATE ]      : 2025-09-13
+% [ DATE ]      : 2025-09-16
 %
 % [ OVERVIEW ]
 %   'feature_extractor_elite.m'에서 C++ 코드 생성이 가능한 순수 계산
 %   로직만을 추출한 버전. 파일 입출력, UI, 지원되지 않는 함수 제거.
+%   샘플링 주파수(Fs)를 동적 입력으로 받아 처리하도록 수정됨.
 % =========================================================================
-
+function features = feature_extractor_codegen(raw_data, Fs_actual)
 %#codegen % 이 함수가 코드 생성을 위한 함수임을 명시합니다.
 
 % --- 0. 입력 및 상수 정의 ---
 ax = raw_data(:,1); ay = raw_data(:,2); az = raw_data(:,3);
 gx = raw_data(:,4); gy = raw_data(:,5); gz = raw_data(:,6);
 N  = size(raw_data, 1);
-Fs = 50; % 샘플링 주파수(가정)
+Fs = Fs_actual;
 t  = (0:N-1).'/Fs;
 
 % 출력 변수의 크기를 1x32로 미리 고정합니다.
@@ -140,9 +140,7 @@ features(26) = f5_hold_ratio_w; features(27) = f5_duty_move;
 features(28) = f5_rpm_est; features(29) = f5_E_accel;
 features(30) = f5_E_gyro; features(31) = f5_pca_evr1;
 features(32) = f5_spec_flat;
-
 end
-
 % --- 유틸 함수 (코드 생성용) ---
 function r = safe_corr_codegen(x,y)
     % Coder가 지원하는 corrcoef를 사용하고, std가 0인 경우를 방어합니다.

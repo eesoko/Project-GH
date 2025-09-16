@@ -1,10 +1,17 @@
-cd "C:\Users\dltjr\AppData\Local\Android\Sdk\platform-tools"
+# GitHub ↔ Desktop / Laptop 동기화 명령어 정리
 
-.\adb kill-server
+## 📌 레포지토리 대응 관계
+- **통합자료용(Project-GH)**
+  - GitHub: https://github.com/eesoko/Project-GH
+  - Desktop: C:\Users\dltjr\OneDrive\Desktop\git\Project-GH
+  - Laptop: C:\Users\SeokHoLee\Desktop\Git\Project_GH
 
-.\adb start-server
+- **안드로이드용(GeunHwang)**
+  - GitHub: https://github.com/eesoko/GeunHwang
+  - Desktop: C:\Users\dltjr\AndroidStudioProjects\GeunHwang
+  - Laptop: C:\Users\SeokHoLee\StudioProjects\GeunHwang
 
-PS C:\Users\dltjr\AppData\Local\Android\Sdk\platform-tools> .\adb.exe connect 172.24.65.109:42543
+---
 
 .\adb.exe connect 172.24.65.109:42543
 

@@ -1,0 +1,36 @@
+Pull (원격 → 로컬 동기화)
+git pull
+
+
+= git pull origin main
+원격 origin/main을 현재 main 브랜치에 병합한다.
+
+Push (로컬 → 원격 업로드)
+git push
+
+
+= git push origin main
+현재 브랜치를 원격 origin/main에 밀어 넣는다.
+
+워크플로우 예시
+
+작업 → 파일 수정
+
+변경 확인
+
+git status
+
+
+스테이징
+
+git add .
+
+
+커밋
+
+git commit -m "작업 내용 메시지"
+
+
+원격 반영
+
+git push

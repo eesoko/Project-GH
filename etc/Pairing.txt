@@ -1,14 +1,74 @@
-cd "C:\Users\dltjr\AppData\Local\Android\Sdk\platform-tools"
+# GitHub ↔ Desktop / Laptop 동기화 명령어 정리
 
-.\adb kill-server
+## 📌 레포지토리 대응 관계
+- **통합자료용(Project-GH)**
+  - GitHub: https://github.com/eesoko/Project-GH
+  - Desktop: C:\Users\dltjr\OneDrive\Desktop\git\Project-GH
+  - Laptop: C:\Users\SeokHoLee\Desktop\Git\Project_GH
 
-.\adb start-server
+- **안드로이드용(GeunHwang)**
+  - GitHub: https://github.com/eesoko/GeunHwang
+  - Desktop: C:\Users\dltjr\AndroidStudioProjects\GeunHwang
+  - Laptop: C:\Users\SeokHoLee\StudioProjects\GeunHwang
 
-PS C:\Users\dltjr\AppData\Local\Android\Sdk\platform-tools> .\adb.exe connect 172.24.65.109:42543
+---
 
-.\adb.exe connect 172.24.65.109:42543
+## 📌 공통 워크플로우
 
-노트북 :
-cd "C:\Users\SeokHoLee\AppData\Local\Android\Sdk\platform-tools"
+### 1. 최신 변경사항 가져오기 (GitHub → 로컬)
+git pull
+항상 작업 시작 전에 실행.
 
-.\adb.exe connect 172.24.65.109:42543
+### 2. 변경사항 확인
+git status
+
+### 3. 파일 스테이징
+git add .
+
+### 4. 커밋
+git commit -m "작업 내용 메시지"
+
+### 5. 원격으로 업로드 (로컬 → GitHub)
+git push
+
+---
+
+## 📌 예시: Desktop에서 Project-GH 동기화
+cd "C:\Users\dltjr\OneDrive\Desktop\git\Project-GH"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+## 📌 예시: Desktop에서 GeunHwang(Android Studio) 동기화
+cd "C:\Users\dltjr\AndroidStudioProjects\GeunHwang"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+## 📌 예시: Laptop에서 Project-GH 동기화
+cd "C:\Users\SeokHoLee\Desktop\Git\Project_GH"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+## 📌 예시: Laptop에서 GeunHwang(Android Studio) 동기화
+cd "C:\Users\SeokHoLee\StudioProjects\Project-GH"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+👉 규칙은 간단하다.
+- 항상 작업 시작 전에는 git pull
+- 작업 후에는 git add . → git commit -m "" → git push

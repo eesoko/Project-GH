@@ -12,12 +12,12 @@
 /* Include files */
 #include "introsort.h"
 #include "insertionsort.h"
-#include "predict_exercise_types.h"
+#include "predict_exercise_internal_types.h"
 #include "rt_nonfinite.h"
 #include <emmintrin.h>
 
 /* Function Definitions */
-void introsort(const cell_wrap_0 cmp_workspace_c[6], int x[6])
+void introsort(const cell_wrap_3 cmp_workspace_c[6], int x[6])
 {
   static const int offsets[4] = {0, 1, 2, 3};
   _mm_storeu_si128(

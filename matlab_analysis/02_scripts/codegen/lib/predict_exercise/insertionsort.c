@@ -11,12 +11,12 @@
 
 /* Include files */
 #include "insertionsort.h"
-#include "predict_exercise_types.h"
+#include "predict_exercise_internal_types.h"
 #include "rt_nonfinite.h"
 #include <math.h>
 
 /* Function Definitions */
-void insertionsort(int x[6], const cell_wrap_0 cmp_workspace_c[6])
+void insertionsort(int x[6], const cell_wrap_3 cmp_workspace_c[6])
 {
   int k;
   for (k = 0; k < 5; k++) {

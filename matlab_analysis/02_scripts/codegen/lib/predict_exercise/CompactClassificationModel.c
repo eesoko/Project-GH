@@ -11,253 +11,211 @@
 
 /* Include files */
 #include "CompactClassificationModel.h"
-#include "introsort.h"
-#include "predict_exercise_types.h"
+#include "cellstr_unique.h"
+#include "convertCodes.h"
+#include "predict_exercise_data.h"
+#include "predict_exercise_internal_types.h"
 #include "rt_nonfinite.h"
 #include "strtrim.h"
 #include "rt_nonfinite.h"
 
 /* Function Definitions */
-unsigned char
-c_CompactClassificationModel_ma(const double obj_Prior[6],
-                                const double scores[6],
-                                cell_wrap_0 labels_categoryNames[6])
+void c_CompactClassificationModel_Co(c_classreg_learning_classif_Com *obj)
 {
-  static const char cv4[18] = {'S', 'i', 'd', 'e', ' ', 'L', 'a', 't', 'e',
-                               'r', 'a', 'l', ' ', 'R', 'a', 'i', 's', 'e'};
-  static const char cv2[14] = {'O', 'v', 'e', 'r', 'h', 'e', 'a',
-                               'd', ' ', 'P', 'r', 'e', 's', 's'};
-  static const char cv[13] = {'D', 'u', 'm', 'b', 'b', 'e', 'l',
-                              'l', ' ', 'C', 'u', 'r', 'l'};
-  static const char a[11] = {'<', 'u', 'n', 'd', 'e', 'f',
-                             'i', 'n', 'e', 'd', '>'};
-  static const char cv3[7] = {'P', 'u', 's', 'h', ' ', 'U', 'p'};
-  static const char cv1[5] = {'L', 'u', 'n', 'g', 'e'};
-  static const char cv5[5] = {'S', 'q', 'u', 'a', 't'};
-  cell_wrap_0 names[7];
-  cell_wrap_0 b_names[6];
-  cell_wrap_0 this_workspace_c[6];
-  cell_wrap_0 inData;
-  cell_wrap_0 tempnames;
-  double b_d;
+  static const char b_cv1[7] = {'P', 'u', 's', 'h', ' ', 'U', 'p'};
+  static const char b_cv[5] = {'L', 'u', 'n', 'g', 'e'};
+  static const char b_cv2[5] = {'S', 'q', 'u', 'a', 't'};
+  cell_wrap_3 rv[6];
+  cell_wrap_3 rv1[6];
+  int i;
+  unsigned char bcodes[6];
+  rv[0].f1.size[0] = 1;
+  rv[0].f1.size[1] = 13;
+  for (i = 0; i < 13; i++) {
+    rv[0].f1.data[i] = cv[i];
+  }
+  rv[1].f1.size[0] = 1;
+  rv[1].f1.size[1] = 5;
+  for (i = 0; i < 5; i++) {
+    rv[1].f1.data[i] = b_cv[i];
+  }
+  rv[2].f1.size[0] = 1;
+  rv[2].f1.size[1] = 14;
+  for (i = 0; i < 14; i++) {
+    rv[2].f1.data[i] = cv1[i];
+  }
+  rv[3].f1.size[0] = 1;
+  rv[3].f1.size[1] = 7;
+  for (i = 0; i < 7; i++) {
+    rv[3].f1.data[i] = b_cv1[i];
+  }
+  rv[4].f1.size[0] = 1;
+  rv[4].f1.size[1] = 18;
+  for (i = 0; i < 18; i++) {
+    rv[4].f1.data[i] = cv2[i];
+  }
+  rv[5].f1.size[0] = 1;
+  rv[5].f1.size[1] = 5;
+  for (i = 0; i < 5; i++) {
+    rv[5].f1.data[i] = b_cv2[i];
+  }
+  rv1[0].f1.size[0] = 1;
+  rv1[0].f1.size[1] = 13;
+  for (i = 0; i < 13; i++) {
+    rv1[0].f1.data[i] = cv[i];
+  }
+  rv1[1].f1.size[0] = 1;
+  rv1[1].f1.size[1] = 5;
+  for (i = 0; i < 5; i++) {
+    rv1[1].f1.data[i] = b_cv[i];
+  }
+  rv1[2].f1.size[0] = 1;
+  rv1[2].f1.size[1] = 14;
+  for (i = 0; i < 14; i++) {
+    rv1[2].f1.data[i] = cv1[i];
+  }
+  rv1[3].f1.size[0] = 1;
+  rv1[3].f1.size[1] = 7;
+  for (i = 0; i < 7; i++) {
+    rv1[3].f1.data[i] = b_cv1[i];
+  }
+  rv1[4].f1.size[0] = 1;
+  rv1[4].f1.size[1] = 18;
+  for (i = 0; i < 18; i++) {
+    rv1[4].f1.data[i] = cv2[i];
+  }
+  rv1[5].f1.size[0] = 1;
+  rv1[5].f1.size[1] = 5;
+  for (i = 0; i < 5; i++) {
+    rv1[5].f1.data[i] = b_cv2[i];
+  }
+  categorical_convertCodes(rv1, rv, bcodes);
+  for (i = 0; i < 6; i++) {
+    if (bcodes[i] == 0) {
+      bcodes[i] = MAX_uint8_T;
+    }
+  }
+  for (i = 0; i < 6; i++) {
+    int iRowS;
+    boolean_T exitg1;
+    obj->ClassLogicalIndices[i] = false;
+    iRowS = 0;
+    exitg1 = false;
+    while ((!exitg1) && (iRowS < 6)) {
+      if (i + 1 == bcodes[iRowS]) {
+        obj->ClassLogicalIndices[i] = true;
+        exitg1 = true;
+      } else {
+        iRowS++;
+      }
+    }
+  }
+}
+
+int c_CompactClassificationModel_mi(const double obj_Cost[36],
+                                    const double scoresIn_data[],
+                                    const int scoresIn_size[2],
+                                    double classnum_data[], double cost_data[],
+                                    int cost_size[2])
+{
+  static const char b_cv1[7] = {'P', 'u', 's', 'h', ' ', 'U', 'p'};
+  static const char b_cv[5] = {'L', 'u', 'n', 'g', 'e'};
+  static const char b_cv2[5] = {'S', 'q', 'u', 'a', 't'};
+  cell_wrap_3 names[6];
+  cell_wrap_3 rv[6];
+  emxArray_cell_wrap_3_6 r;
+  double ib_data[6];
   double ex;
-  int unusedExpr[6];
-  int b_k;
-  int iindx;
+  int classnum_size;
+  int cost_data_tmp;
+  int i;
+  int idx;
   int k;
-  int nb;
-  boolean_T d[6];
-  boolean_T exitg1;
-  boolean_T y;
+  classnum_size = scoresIn_size[0];
+  cost_size[0] = classnum_size;
+  cost_size[1] = 6;
   for (k = 0; k < 6; k++) {
-    d[k] = rtIsNaN(scores[k]);
+    if (classnum_size - 1 >= 0) {
+      cost_data[classnum_size * k] = 0.0;
+    }
+    for (idx = 0; idx < 6; idx++) {
+      ex = obj_Cost[idx + 6 * k];
+      for (i = 0; i < classnum_size; i++) {
+        cost_data_tmp = classnum_size * k;
+        cost_data[cost_data_tmp] += scoresIn_data[scoresIn_size[0] * idx] * ex;
+      }
+    }
   }
-  y = true;
-  b_k = 0;
-  exitg1 = false;
-  while ((!exitg1) && (b_k <= 5)) {
-    if (!d[b_k]) {
-      y = false;
-      exitg1 = true;
+  for (idx = 0; idx < classnum_size; idx++) {
+    int b_idx;
+    if (!rtIsNaN(cost_data[0])) {
+      b_idx = 1;
     } else {
-      b_k++;
+      boolean_T exitg1;
+      b_idx = 0;
+      cost_data_tmp = 2;
+      exitg1 = false;
+      while ((!exitg1) && (cost_data_tmp < 7)) {
+        if (!rtIsNaN(cost_data[classnum_size * (cost_data_tmp - 1)])) {
+          b_idx = cost_data_tmp;
+          exitg1 = true;
+        } else {
+          cost_data_tmp++;
+        }
+      }
     }
-  }
-  ex = obj_Prior[0];
-  iindx = 1;
-  for (k = 0; k < 5; k++) {
-    b_d = obj_Prior[k + 1];
-    if (ex < b_d) {
-      ex = b_d;
-      iindx = k + 2;
+    if (b_idx == 0) {
+      b_idx = 1;
+    } else {
+      ex = cost_data[classnum_size * (b_idx - 1)];
+      cost_data_tmp = b_idx + 1;
+      for (k = cost_data_tmp; k < 7; k++) {
+        double d;
+        d = cost_data[classnum_size * (k - 1)];
+        if (ex > d) {
+          ex = d;
+          b_idx = k;
+        }
+      }
     }
+    classnum_data[0] = b_idx;
   }
   names[0].f1.size[0] = 1;
-  names[0].f1.size[1] = 11;
-  for (k = 0; k < 11; k++) {
-    names[0].f1.data[k] = a[k];
+  names[0].f1.size[1] = 13;
+  for (k = 0; k < 13; k++) {
+    names[0].f1.data[k] = cv[k];
   }
   names[1].f1.size[0] = 1;
-  names[1].f1.size[1] = 13;
-  for (k = 0; k < 13; k++) {
-    names[1].f1.data[k] = cv[k];
+  names[1].f1.size[1] = 5;
+  for (k = 0; k < 5; k++) {
+    names[1].f1.data[k] = b_cv[k];
   }
   names[2].f1.size[0] = 1;
-  names[2].f1.size[1] = 5;
-  for (k = 0; k < 5; k++) {
+  names[2].f1.size[1] = 14;
+  for (k = 0; k < 14; k++) {
     names[2].f1.data[k] = cv1[k];
   }
   names[3].f1.size[0] = 1;
-  names[3].f1.size[1] = 14;
-  for (k = 0; k < 14; k++) {
-    names[3].f1.data[k] = cv2[k];
+  names[3].f1.size[1] = 7;
+  for (k = 0; k < 7; k++) {
+    names[3].f1.data[k] = b_cv1[k];
   }
   names[4].f1.size[0] = 1;
-  names[4].f1.size[1] = 7;
-  for (k = 0; k < 7; k++) {
-    names[4].f1.data[k] = cv3[k];
+  names[4].f1.size[1] = 18;
+  for (k = 0; k < 18; k++) {
+    names[4].f1.data[k] = cv2[k];
   }
   names[5].f1.size[0] = 1;
-  names[5].f1.size[1] = 18;
-  for (k = 0; k < 18; k++) {
-    names[5].f1.data[k] = cv4[k];
-  }
-  names[6].f1.size[0] = 1;
-  names[6].f1.size[1] = 5;
+  names[5].f1.size[1] = 5;
   for (k = 0; k < 5; k++) {
-    names[6].f1.data[k] = cv5[k];
+    names[5].f1.data[k] = b_cv2[k];
   }
-  tempnames.f1.size[0] = 1;
-  b_k = names[iindx].f1.size[1];
-  tempnames.f1.size[1] = b_k;
-  for (k = 0; k < b_k; k++) {
-    tempnames.f1.data[k] = names[iindx].f1.data[k];
-  }
-  b_names[0].f1.size[0] = 1;
-  b_names[0].f1.size[1] = 13;
-  for (k = 0; k < 13; k++) {
-    b_names[0].f1.data[k] = cv[k];
-  }
-  b_names[1].f1.size[0] = 1;
-  b_names[1].f1.size[1] = 5;
-  for (k = 0; k < 5; k++) {
-    b_names[1].f1.data[k] = cv1[k];
-  }
-  b_names[2].f1.size[0] = 1;
-  b_names[2].f1.size[1] = 14;
-  for (k = 0; k < 14; k++) {
-    b_names[2].f1.data[k] = cv2[k];
-  }
-  b_names[3].f1.size[0] = 1;
-  b_names[3].f1.size[1] = 7;
-  for (k = 0; k < 7; k++) {
-    b_names[3].f1.data[k] = cv3[k];
-  }
-  b_names[4].f1.size[0] = 1;
-  b_names[4].f1.size[1] = 18;
-  for (k = 0; k < 18; k++) {
-    b_names[4].f1.data[k] = cv4[k];
-  }
-  b_names[5].f1.size[0] = 1;
-  b_names[5].f1.size[1] = 5;
-  for (k = 0; k < 5; k++) {
-    b_names[5].f1.data[k] = cv5[k];
-  }
-  if (!y) {
-    if (!rtIsNaN(scores[0])) {
-      iindx = 1;
-    } else {
-      iindx = 0;
-      b_k = 2;
-      exitg1 = false;
-      while ((!exitg1) && (b_k < 7)) {
-        if (!rtIsNaN(scores[b_k - 1])) {
-          iindx = b_k;
-          exitg1 = true;
-        } else {
-          b_k++;
-        }
-      }
-    }
-    if (iindx == 0) {
-      nb = 0;
-    } else {
-      ex = scores[iindx - 1];
-      nb = iindx - 1;
-      b_k = iindx + 1;
-      for (k = b_k; k < 7; k++) {
-        b_d = scores[k - 1];
-        if (ex < b_d) {
-          ex = b_d;
-          nb = k - 1;
-        }
-      }
-    }
-    tempnames.f1.size[0] = 1;
-    b_k = b_names[nb].f1.size[1];
-    tempnames.f1.size[1] = b_k;
-    for (k = 0; k < b_k; k++) {
-      tempnames.f1.data[k] = b_names[nb].f1.data[k];
-    }
-  }
-  strtrim(tempnames.f1.data, tempnames.f1.size, inData.f1.data, inData.f1.size);
   for (k = 0; k < 6; k++) {
-    strtrim(b_names[k].f1.data, b_names[k].f1.size, this_workspace_c[k].f1.data,
-            this_workspace_c[k].f1.size);
+    strtrim(names[k].f1.data, names[k].f1.size, rv[k].f1.data, rv[k].f1.size);
   }
-  introsort(this_workspace_c, unusedExpr);
-  labels_categoryNames[0].f1.size[0] = 1;
-  b_k = this_workspace_c[0].f1.size[1];
-  labels_categoryNames[0].f1.size[1] = this_workspace_c[0].f1.size[1];
-  for (k = 0; k < b_k; k++) {
-    labels_categoryNames[0].f1.data[k] = this_workspace_c[0].f1.data[k];
-  }
-  labels_categoryNames[1].f1.size[0] = 1;
-  b_k = this_workspace_c[1].f1.size[1];
-  labels_categoryNames[1].f1.size[1] = this_workspace_c[1].f1.size[1];
-  for (k = 0; k < b_k; k++) {
-    labels_categoryNames[1].f1.data[k] = this_workspace_c[1].f1.data[k];
-  }
-  labels_categoryNames[2].f1.size[0] = 1;
-  b_k = this_workspace_c[2].f1.size[1];
-  labels_categoryNames[2].f1.size[1] = this_workspace_c[2].f1.size[1];
-  for (k = 0; k < b_k; k++) {
-    labels_categoryNames[2].f1.data[k] = this_workspace_c[2].f1.data[k];
-  }
-  labels_categoryNames[3].f1.size[0] = 1;
-  b_k = this_workspace_c[3].f1.size[1];
-  labels_categoryNames[3].f1.size[1] = this_workspace_c[3].f1.size[1];
-  for (k = 0; k < b_k; k++) {
-    labels_categoryNames[3].f1.data[k] = this_workspace_c[3].f1.data[k];
-  }
-  labels_categoryNames[4].f1.size[0] = 1;
-  b_k = this_workspace_c[4].f1.size[1];
-  labels_categoryNames[4].f1.size[1] = this_workspace_c[4].f1.size[1];
-  for (k = 0; k < b_k; k++) {
-    labels_categoryNames[4].f1.data[k] = this_workspace_c[4].f1.data[k];
-  }
-  labels_categoryNames[5].f1.size[0] = 1;
-  b_k = this_workspace_c[5].f1.size[1];
-  labels_categoryNames[5].f1.size[1] = this_workspace_c[5].f1.size[1];
-  for (k = 0; k < b_k; k++) {
-    labels_categoryNames[5].f1.data[k] = this_workspace_c[5].f1.data[k];
-  }
-  b_k = 0;
-  iindx = 0;
-  exitg1 = false;
-  while ((!exitg1) && (iindx < 6)) {
-    boolean_T b;
-    y = false;
-    nb = this_workspace_c[iindx].f1.size[1];
-    b = (inData.f1.size[1] == 0);
-    if (b && (nb == 0)) {
-      y = true;
-    } else if (inData.f1.size[1] == nb) {
-      int kstr;
-      kstr = 0;
-      int exitg2;
-      do {
-        exitg2 = 0;
-        if (kstr <= nb - 1) {
-          if (inData.f1.data[kstr] != this_workspace_c[iindx].f1.data[kstr]) {
-            exitg2 = 1;
-          } else {
-            kstr++;
-          }
-        } else {
-          y = true;
-          exitg2 = 1;
-        }
-      } while (exitg2 == 0);
-    }
-    if (y) {
-      b_k = iindx + 1;
-      exitg1 = true;
-    } else {
-      iindx++;
-    }
-  }
-  return (unsigned char)b_k;
+  b_cellstr_unique(rv, r.data);
+  cellstr_unique(rv, names, ib_data, &cost_data_tmp);
+  return classnum_size;
 }
 
 /* End of code generation (CompactClassificationModel.c) */

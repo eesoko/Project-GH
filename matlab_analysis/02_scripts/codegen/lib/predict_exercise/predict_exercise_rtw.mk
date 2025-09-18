@@ -2,7 +2,7 @@
 ## Makefile generated for component 'predict_exercise'. 
 ## 
 ## Makefile     : predict_exercise_rtw.mk
-## Generated on : Tue Sep 16 19:24:09 2025
+## Generated on : Thu Sep 18 16:24:46 2025
 ## Final product: ./predict_exercise.lib
 ## Product type : static-library
 ## 
@@ -24,7 +24,7 @@ MAKEFILE                  = predict_exercise_rtw.mk
 MATLAB_ROOT               = C:/PROGRA~1/MATLAB/R2025a
 MATLAB_BIN                = C:/PROGRA~1/MATLAB/R2025a/bin
 MATLAB_ARCH_BIN           = $(MATLAB_BIN)/win64
-START_DIR                 = C:/Users/dltjr/OneDrive/Desktop/git/Project-GH/matlab_analysis/02_scripts
+START_DIR                 = C:/Users/SeokHoLee/Desktop/Git/Project_GH/matlab_analysis/02_scripts
 TGT_FCN_LIB               = ISO_C
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
@@ -183,7 +183,7 @@ DEFINES = $(DEFINES_) $(DEFINES_CUSTOM) $(DEFINES_STANDARD)
 ## SOURCE FILES
 ###########################################################################
 
-SRCS = $(START_DIR)/codegen/lib/predict_exercise/predict_exercise_data.c $(START_DIR)/codegen/lib/predict_exercise/rt_nonfinite.c $(START_DIR)/codegen/lib/predict_exercise/rtGetNaN.c $(START_DIR)/codegen/lib/predict_exercise/rtGetInf.c $(START_DIR)/codegen/lib/predict_exercise/predict_exercise_initialize.c $(START_DIR)/codegen/lib/predict_exercise/predict_exercise_terminate.c $(START_DIR)/codegen/lib/predict_exercise/predict_exercise.c $(START_DIR)/codegen/lib/predict_exercise/ClassificationECOC.c $(START_DIR)/codegen/lib/predict_exercise/loss.c $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationModel.c $(START_DIR)/codegen/lib/predict_exercise/strtrim.c $(START_DIR)/codegen/lib/predict_exercise/Poly.c $(START_DIR)/codegen/lib/predict_exercise/introsort.c $(START_DIR)/codegen/lib/predict_exercise/insertionsort.c
+SRCS = $(START_DIR)/codegen/lib/predict_exercise/predict_exercise_data.c $(START_DIR)/codegen/lib/predict_exercise/rt_nonfinite.c $(START_DIR)/codegen/lib/predict_exercise/rtGetNaN.c $(START_DIR)/codegen/lib/predict_exercise/rtGetInf.c $(START_DIR)/codegen/lib/predict_exercise/predict_exercise_initialize.c $(START_DIR)/codegen/lib/predict_exercise/predict_exercise_terminate.c $(START_DIR)/codegen/lib/predict_exercise/predict_exercise.c $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationEnsemble.c $(START_DIR)/codegen/lib/predict_exercise/CompactEnsemble.c $(START_DIR)/codegen/lib/predict_exercise/convertCodes.c $(START_DIR)/codegen/lib/predict_exercise/find.c $(START_DIR)/codegen/lib/predict_exercise/cellstr_unique.c $(START_DIR)/codegen/lib/predict_exercise/string1.c $(START_DIR)/codegen/lib/predict_exercise/ismember.c $(START_DIR)/codegen/lib/predict_exercise/strtrim.c $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationDiscriminant.c $(START_DIR)/codegen/lib/predict_exercise/introsort.c $(START_DIR)/codegen/lib/predict_exercise/strcmp.c $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationModel.c $(START_DIR)/codegen/lib/predict_exercise/updateCache.c $(START_DIR)/codegen/lib/predict_exercise/predictOneWithCache.c $(START_DIR)/codegen/lib/predict_exercise/insertionsort.c $(START_DIR)/codegen/lib/predict_exercise/CholeskyDiscriminant.c
 
 ALL_SRCS = $(SRCS)
 
@@ -191,7 +191,7 @@ ALL_SRCS = $(SRCS)
 ## OBJECTS
 ###########################################################################
 
-OBJS = predict_exercise_data.obj rt_nonfinite.obj rtGetNaN.obj rtGetInf.obj predict_exercise_initialize.obj predict_exercise_terminate.obj predict_exercise.obj ClassificationECOC.obj loss.obj CompactClassificationModel.obj strtrim.obj Poly.obj introsort.obj insertionsort.obj
+OBJS = predict_exercise_data.obj rt_nonfinite.obj rtGetNaN.obj rtGetInf.obj predict_exercise_initialize.obj predict_exercise_terminate.obj predict_exercise.obj CompactClassificationEnsemble.obj CompactEnsemble.obj convertCodes.obj find.obj cellstr_unique.obj string1.obj ismember.obj strtrim.obj CompactClassificationDiscriminant.obj introsort.obj strcmp.obj CompactClassificationModel.obj updateCache.obj predictOneWithCache.obj insertionsort.obj CholeskyDiscriminant.obj
 
 ALL_OBJS = $(OBJS)
 
@@ -494,15 +494,31 @@ predict_exercise.obj : $(START_DIR)/codegen/lib/predict_exercise/predict_exercis
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-ClassificationECOC.obj : $(START_DIR)/codegen/lib/predict_exercise/ClassificationECOC.c
+CompactClassificationEnsemble.obj : $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationEnsemble.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-loss.obj : $(START_DIR)/codegen/lib/predict_exercise/loss.c
+CompactEnsemble.obj : $(START_DIR)/codegen/lib/predict_exercise/CompactEnsemble.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-CompactClassificationModel.obj : $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationModel.c
+convertCodes.obj : $(START_DIR)/codegen/lib/predict_exercise/convertCodes.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+find.obj : $(START_DIR)/codegen/lib/predict_exercise/find.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+cellstr_unique.obj : $(START_DIR)/codegen/lib/predict_exercise/cellstr_unique.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+string1.obj : $(START_DIR)/codegen/lib/predict_exercise/string1.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+ismember.obj : $(START_DIR)/codegen/lib/predict_exercise/ismember.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
@@ -510,7 +526,7 @@ strtrim.obj : $(START_DIR)/codegen/lib/predict_exercise/strtrim.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
-Poly.obj : $(START_DIR)/codegen/lib/predict_exercise/Poly.c
+CompactClassificationDiscriminant.obj : $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationDiscriminant.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
@@ -518,7 +534,27 @@ introsort.obj : $(START_DIR)/codegen/lib/predict_exercise/introsort.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 
+strcmp.obj : $(START_DIR)/codegen/lib/predict_exercise/strcmp.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+CompactClassificationModel.obj : $(START_DIR)/codegen/lib/predict_exercise/CompactClassificationModel.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+updateCache.obj : $(START_DIR)/codegen/lib/predict_exercise/updateCache.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+predictOneWithCache.obj : $(START_DIR)/codegen/lib/predict_exercise/predictOneWithCache.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
 insertionsort.obj : $(START_DIR)/codegen/lib/predict_exercise/insertionsort.c
+	$(CC) $(CFLAGS) -o "$@" "$<"
+
+
+CholeskyDiscriminant.obj : $(START_DIR)/codegen/lib/predict_exercise/CholeskyDiscriminant.c
 	$(CC) $(CFLAGS) -o "$@" "$<"
 
 

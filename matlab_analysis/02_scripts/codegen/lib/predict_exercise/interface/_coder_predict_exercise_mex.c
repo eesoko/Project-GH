@@ -17,9 +17,10 @@
 void mexFunction(int32_T nlhs, mxArray *plhs[], int32_T nrhs,
                  const mxArray *prhs[])
 {
+  (void)plhs;
   mexAtExit(&predict_exercise_atexit);
   predict_exercise_initialize();
-  unsafe_predict_exercise_mexFunction(nlhs, plhs, nrhs, prhs);
+  unsafe_predict_exercise_mexFunction(nlhs, nrhs, prhs);
   predict_exercise_terminate();
 }
 
@@ -30,29 +31,26 @@ emlrtCTX mexFunctionCreateRootTLS(void)
   return emlrtRootTLSGlobal;
 }
 
-void unsafe_predict_exercise_mexFunction(int32_T nlhs, mxArray *plhs[1],
-                                         int32_T nrhs, const mxArray *prhs[1])
+void unsafe_predict_exercise_mexFunction(int32_T nlhs, int32_T nrhs,
+                                         const mxArray *prhs[1])
 {
   emlrtStack st = {
       NULL, /* site */
       NULL, /* tls */
       NULL  /* prev */
   };
-  const mxArray *outputs;
   st.tls = emlrtRootTLSGlobal;
   /* Check for proper number of arguments. */
   if (nrhs != 1) {
     emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:WrongNumberOfInputs", 5, 12, 1, 4,
                         16, "predict_exercise");
   }
-  if (nlhs > 1) {
+  if (nlhs > 0) {
     emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:TooManyOutputArguments", 3, 4, 16,
                         "predict_exercise");
   }
   /* Call the function. */
-  predict_exercise_api(prhs[0], &outputs);
-  /* Copy over outputs to the caller. */
-  emlrtReturnArrays(1, &plhs[0], &outputs);
+  predict_exercise_api(prhs[0]);
 }
 
 /* End of code generation (_coder_predict_exercise_mex.c) */

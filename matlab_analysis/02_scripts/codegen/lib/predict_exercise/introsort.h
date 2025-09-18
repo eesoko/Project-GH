@@ -13,7 +13,7 @@
 #define INTROSORT_H
 
 /* Include files */
-#include "predict_exercise_types.h"
+#include "predict_exercise_internal_types.h"
 #include "rtwtypes.h"
 #include <stddef.h>
 #include <stdlib.h>
@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 /* Function Declarations */
-void introsort(const cell_wrap_0 cmp_workspace_c[6], int x[6]);
+void introsort(const cell_wrap_3 cmp_workspace_c[6], int x[6]);
 
 #ifdef __cplusplus
 }

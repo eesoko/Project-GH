@@ -13,7 +13,6 @@
 #define PREDICT_EXERCISE_H
 
 /* Include files */
-#include "predict_exercise_types.h"
 #include "rtwtypes.h"
 #include <stddef.h>
 #include <stdlib.h>
@@ -23,8 +22,7 @@ extern "C" {
 #endif
 
 /* Function Declarations */
-extern void predict_exercise(const double input_features[32],
-                             categorical *label);
+extern void predict_exercise(const double input_features[32]);
 
 #ifdef __cplusplus
 }

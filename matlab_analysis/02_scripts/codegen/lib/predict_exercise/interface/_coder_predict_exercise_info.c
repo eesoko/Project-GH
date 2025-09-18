@@ -21,33 +21,29 @@ static const mxArray *c_emlrtMexFcnResolvedFunctionsI(void);
 static const mxArray *c_emlrtMexFcnResolvedFunctionsI(void)
 {
   const mxArray *nameCaptureInfo;
-  const char_T *data[7] = {
-      "789ced573b6f1341103ea3806802aef20ba2504498101e8274c18e9303d90eb29d87bcc1"
-      "59df6d9c4df671d95d5b672a4a3af82994882a2d0505120505353f00"
-      "6891b0cfb776bcd271511c2e8ac53473e36f77be9dd99b4f672b6517529665ddb0faf66e"
-      "a6efa7c3381dfa2bd6a899782af45346aced6a884c1bf89bd03b9c29",
-      "e4ab7ec02045839d2ea79841a62a1d0f5902494edac80d903d4c500553543e19147b11cd"
-      "9f8006410fea3d67f79173586e514beccbe109c9c960d08fdd887aa7"
-      "ac513371d3cc7e98eb349f7746be54446cf269ef09e46247d5918f8483251ab75ecd772d"
-      "92bf8fb8bcd5206858eff1987cf548be51bcb6b2935d02558984042e",
-      "5107029418ca09dc462087e4a1e21e686205d6053f408ebabdba0628540436ea9041d291"
-      "588285c5ba7404f6940466f33234f67db979ca7a4c3f5c7f3df03fe6"
-      "be0550527cb73e7d3f4a924fdb45f1f911f94efb3ece44f0a50dbce3f0655ababb9ce7cd"
-      "2a7db89fcf71fbf993d5e139d66378e2ce6145c449e5df8dd8ffaf74",
-      "73d2f98ecfc8a7f3bf88e1d378ad7a8e3ae910045979a350e02e2299eec2e4e6fa67c23a"
-      "09ed57bf92e4d336e93a597565966c3ddec6c27ee9970573e04a07e7"
-      "274727df47ec3f6d1f3722f2a70dbc66677766fba32a3857b340714e1adc0752c16052a1"
-      "940235c1fcf0a93bbc8261d6fbad3bbf02ccd3de18832ca71e745477",
-      "acbb9f3d833ade8e59c79d983a34ae8f97d1a7cb04876b294c6446b669e619120c917c8b"
-      "390a737669f57a27864fe335bb38e6bd06ad03f3ddde81d1def5ae37"
-      "317df96c7f4954afadaf1f1f24ca17daa4ebf5a65fed6caf1ddd836ed1a7255b6c319b14"
-      "72fff55ae7ab46e44f1bf839e87528d4ebfd3fab5c8cccf3eb31eb98",
-      "8ba943e37fd5eb8a804cee71412feebb7adcfb2cc7f069fcbc747ad0b2e03693d393a50f"
-      "09eb33f84d12e50b6dd2f5f929ac545ad0dd148da2f2ee6f3ff21716"
-      "b9c85e7e7dfe03282978bb",
+  const char_T *data[6] = {
+      "789cdd56cd6ed34010de4041bd00b9c0135415125214452055bd9114dad0240492006db6"
+      "4a36f6846eb3ebb57637a9f306dc100f838438f1101c79041e800b12"
+      "89edcd8f25cb510346e95cc6e36f77bf99b1e7d3a24cb99a4108dd4581fdca06fe4e1887"
+      "21ba81962d8a67427f33121bbb85b696f619fc63e82de168f0741038",
+      "84c36ca72d387588a39b6317900425d8086c1fe953064dcaa1b118d4a6117fbe00cd8229"
+      "347d2e9d8335680c3992e76a9e215b0c66fde8c6d4bb95d08fa845fb"
+      "115d67f8dc2bf26562e2289ff1ae049b5aba031e488b2a58b75ec3773b963f406c31ec31"
+      "98d7fb6d4dbed358be65bcfdecacb48f5b0aa4c20d1083235101c007",
+      "a0065ab8f8906a5c97e202261d393cc29c68467a1de210365654e17ca1a32c495dad70b4"
+      "6f391e9c9fd4bf7b2bd613f5f3f5dbbeaf3ffc914993af9b3ff99426"
+      "9fb1ffc5e7c59cb7eafff820862f1bc10bafd4f89dac78a36abfca0f9ee42bbdc6252dce"
+      "f3a827f024e58162e2b4ceefc6ecff57ba79ddf9be5c91cf9cff2681",
+      "cfe0edd6dfd1498b0171aac206969bac4a6f9e79cafaf8f96765374d3e639baa8ff763f8"
+      "b211fc72507c591995d5293d96af8b7cefa9a35b45747df471dd796e"
+      "c59c9f8de0ed72e96c2798532984dec15a08d6131e569af8634a9492f01e3f9a3f4d2657"
+      "3ad499be9bccafc425c15d62e97a70f311d2bff2983a3eac59c76e42",
+      "1d0637e9e54c76393fb9a1a64ce59a9238aa2f24df5c7d6e24f019bc5daeadf93dfd96e1"
+      "59cbc20b6c5a7ab2fff57baafa8cf06f962a5f689baacfabde5f5f90"
+      "667348ecb7b257d3eee3933d2f5f10b2b4f9fafc07b5200263",
       ""};
   nameCaptureInfo = NULL;
-  emlrtNameCaptureMxArrayR2016a(&data[0], 5832U, &nameCaptureInfo);
+  emlrtNameCaptureMxArrayR2016a(&data[0], 4368U, &nameCaptureInfo);
   return nameCaptureInfo;
 }
 
@@ -89,14 +85,14 @@ mxArray *emlrtMexFcnProperties(void)
   emlrtSetField(xEntryPoints, 0, "NumberOfInputs",
                 emlrtMxCreateDoubleScalar(1.0));
   emlrtSetField(xEntryPoints, 0, "NumberOfOutputs",
-                emlrtMxCreateDoubleScalar(1.0));
+                emlrtMxCreateDoubleScalar(0.0));
   emlrtSetField(xEntryPoints, 0, "ConstantInputs", xInputs);
   emlrtSetField(xEntryPoints, 0, "ResolvedFilePath",
                 emlrtMxCreateString(
-                    "C:\\Users\\dltjr\\OneDrive\\Desktop\\git\\Project-"
-                    "GH\\matlab_analysis\\02_scripts\\predict_exercise.m"));
+                    "C:\\Users\\SeokHoLee\\Desktop\\Git\\Project_GH\\matlab_"
+                    "analysis\\02_scripts\\predict_exercise.m"));
   emlrtSetField(xEntryPoints, 0, "TimeStamp",
-                emlrtMxCreateDoubleScalar(739876.80050925922));
+                emlrtMxCreateDoubleScalar(739878.54098379635));
   emlrtSetField(xEntryPoints, 0, "Visible", emlrtMxCreateLogicalScalar(true));
   xResult =
       emlrtCreateStructMatrix(1, 1, 7, (const char_T **)&propFieldName[0]);
@@ -105,7 +101,7 @@ mxArray *emlrtMexFcnProperties(void)
   emlrtSetField(xResult, 0, "ResolvedFunctions",
                 (mxArray *)c_emlrtMexFcnResolvedFunctionsI());
   emlrtSetField(xResult, 0, "Checksum",
-                emlrtMxCreateString("905S7T95ZqoT9osBLkfCeC"));
+                emlrtMxCreateString("5QR6ubdVaC7zOglyaMntZH"));
   emlrtSetField(xResult, 0, "EntryPoints", xEntryPoints);
   emlrtSetField(xResult, 0, "AuxData",
                 emlrtMxCreateRowVectorUINT8((const uint8_T *)&v, 216U));

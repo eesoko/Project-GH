@@ -40,9 +40,6 @@ static void emlrtExitTimeCleanupDtorFcn(const void *r);
 static real_T (*emlrt_marshallIn(const emlrtStack *sp, const mxArray *nullptr,
                                  const char_T *identifier))[32];
 
-static const mxArray *emlrt_marshallOut(const emlrtStack *sp,
-                                        const categorical *u);
-
 /* Function Definitions */
 static real_T (*b_emlrt_marshallIn(const emlrtStack *sp, const mxArray *u,
                                    const emlrtMsgIdentifier *parentId))[32]
@@ -85,92 +82,8 @@ static real_T (*emlrt_marshallIn(const emlrtStack *sp, const mxArray *nullptr,
   return y;
 }
 
-static const mxArray *emlrt_marshallOut(const emlrtStack *sp,
-                                        const categorical *u)
+void predict_exercise_api(const mxArray *prhs)
 {
-  const mxArray *propValues[5];
-  const mxArray *b_y;
-  const mxArray *c_y;
-  const mxArray *d_y;
-  const mxArray *e_y;
-  const mxArray *f_y;
-  const mxArray *g_y;
-  const mxArray *m;
-  const mxArray *m1;
-  const mxArray *m2;
-  const mxArray *m3;
-  const mxArray *m4;
-  const mxArray *m5;
-  const mxArray *y;
-  int32_T iv[2];
-  int32_T i;
-  int32_T i1;
-  const char_T *propClasses[5] = {
-      "matlab.internal.coder.categorical", "matlab.internal.coder.categorical",
-      "matlab.internal.coder.categorical", "matlab.internal.coder.categorical",
-      "matlab.internal.coder.categorical"};
-  const char_T *propNames[5] = {"codes", "categoryNames", "isProtected",
-                                "isOrdinal", "numCategoriesUpperBound"};
-  y = NULL;
-  m = NULL;
-  m1 = NULL;
-  m2 = NULL;
-  m3 = NULL;
-  m4 = NULL;
-  emlrtAssign(&y, emlrtCreateClassInstance2022a(
-                      (emlrtCTX)sp, "matlab.internal.coder.categorical"));
-  m = NULL;
-  b_y = NULL;
-  m5 = emlrtCreateNumericMatrix(1, 1, mxUINT8_CLASS, mxREAL);
-  *(uint8_T *)emlrtMxGetData(m5) = u->codes;
-  emlrtAssign(&b_y, m5);
-  emlrtAssign(&m, b_y);
-  propValues[0] = m;
-  m1 = NULL;
-  c_y = NULL;
-  i = 6;
-  emlrtAssign(&c_y, emlrtCreateCellArrayR2014a(1, &i));
-  for (i1 = 0; i1 < 6; i1++) {
-    d_y = NULL;
-    iv[0] = 1;
-    i = u->categoryNames[i1].f1.size[1];
-    iv[1] = i;
-    m5 = emlrtCreateCharArray(2, &iv[0]);
-    emlrtInitCharArrayR2013a((emlrtConstCTX)sp, i, m5,
-                             &u->categoryNames[i1].f1.data[0]);
-    emlrtAssign(&d_y, m5);
-    emlrtSetCell(c_y, i1, d_y);
-  }
-  emlrtAssign(&m1, c_y);
-  propValues[1] = m1;
-  m2 = NULL;
-  e_y = NULL;
-  m5 = emlrtCreateLogicalScalar(false);
-  emlrtAssign(&e_y, m5);
-  emlrtAssign(&m2, e_y);
-  propValues[2] = m2;
-  m3 = NULL;
-  f_y = NULL;
-  m5 = emlrtCreateLogicalScalar(false);
-  emlrtAssign(&f_y, m5);
-  emlrtAssign(&m3, f_y);
-  propValues[3] = m3;
-  m4 = NULL;
-  g_y = NULL;
-  m5 = emlrtCreateDoubleScalar(6.0);
-  emlrtAssign(&g_y, m5);
-  emlrtAssign(&m4, g_y);
-  propValues[4] = m4;
-  emlrtSetAllProperties((emlrtCTX)sp, &y, 0, 5, (const char_T **)&propNames[0],
-                        (const char_T **)&propClasses[0], &propValues[0]);
-  emlrtAssign(&y, emlrtConvertInstanceToRedirectSource(
-                      (emlrtCTX)sp, y, 0, "matlab.internal.coder.categorical"));
-  return y;
-}
-
-void predict_exercise_api(const mxArray *prhs, const mxArray **plhs)
-{
-  categorical label;
   emlrtStack st = {
       NULL, /* site */
       NULL, /* tls */
@@ -181,9 +94,7 @@ void predict_exercise_api(const mxArray *prhs, const mxArray **plhs)
   /* Marshall function inputs */
   input_features = emlrt_marshallIn(&st, emlrtAlias(prhs), "input_features");
   /* Invoke the target function */
-  predict_exercise(*input_features, &label);
-  /* Marshall function outputs */
-  *plhs = emlrt_marshallOut(&st, &label);
+  predict_exercise(*input_features);
 }
 
 void predict_exercise_atexit(void)

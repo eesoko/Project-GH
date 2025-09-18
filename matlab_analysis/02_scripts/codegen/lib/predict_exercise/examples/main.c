@@ -39,7 +39,6 @@
 #include "predict_exercise.h"
 #include "predict_exercise_initialize.h"
 #include "predict_exercise_terminate.h"
-#include "predict_exercise_types.h"
 #include "rt_nonfinite.h"
 
 /* Function Declarations */
@@ -82,13 +81,12 @@ You do not need to do this more than one time. */
 
 void main_predict_exercise(void)
 {
-  categorical label;
-  double dv[32];
+  double b_dv[32];
   /* Initialize function 'predict_exercise' input arguments. */
   /* Initialize function input argument 'input_features'. */
   /* Call the entry-point 'predict_exercise'. */
-  argInit_1x32_real_T(dv);
-  predict_exercise(dv, &label);
+  argInit_1x32_real_T(b_dv);
+  predict_exercise(b_dv);
 }
 
 /* End of code generation (main.c) */

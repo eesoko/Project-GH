@@ -1,36 +1,74 @@
-Pull (원격 → 로컬 동기화)
+GitHub ↔ Desktop / Laptop 동기화 명령어 정리
+
+📌 레포지토리 대응 관계
+- **통합자료용(Project-GH)**
+  - GitHub: https://github.com/eesoko/Project-GH
+  - Desktop: C:\Users\dltjr\OneDrive\Desktop\git\Project-GH
+  - Laptop: C:\Users\SeokHoLee\Desktop\Git\Project_GH
+
+- **안드로이드용(GeunHwang)**
+  - GitHub: https://github.com/eesoko/GeunHwang
+  - Desktop: C:\Users\dltjr\AndroidStudioProjects\GeunHwang
+  - Laptop: C:\Users\SeokHoLee\StudioProjects\Project-GH
+
+---
+
+📌 공통 워크플로우
+
+### 1. 최신 변경사항 가져오기 (GitHub → 로컬)
 git pull
+항상 작업 시작 전에 실행.
 
-
-= git pull origin main
-원격 origin/main을 현재 main 브랜치에 병합한다.
-
-Push (로컬 → 원격 업로드)
-git push
-
-
-= git push origin main
-현재 브랜치를 원격 origin/main에 밀어 넣는다.
-
-워크플로우 예시
-
-작업 → 파일 수정
-
-변경 확인
-
+### 2. 변경사항 확인
 git status
 
-
-스테이징
-
+### 3. 파일 스테이징
 git add .
 
-
-커밋
-
+### 4. 커밋
 git commit -m "작업 내용 메시지"
 
-
-원격 반영
-
+### 5. 원격으로 업로드 (로컬 → GitHub)
 git push
+
+---
+
+## 📌 예시: Desktop에서 Project-GH 동기화
+cd "C:\Users\dltjr\OneDrive\Desktop\git\Project-GH"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+## 📌 예시: Desktop에서 GeunHwang(Android Studio) 동기화
+cd "C:\Users\dltjr\AndroidStudioProjects\GeunHwang"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+## 📌 예시: Laptop에서 Project-GH 동기화
+cd "C:\Users\SeokHoLee\Desktop\Git\Project_GH"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+## 📌 예시: Laptop에서 GeunHwang(Android Studio) 동기화
+cd "C:\Users\SeokHoLee\StudioProjects\GeunHwang"
+git pull
+git add .
+git commit -m "update"
+git push
+
+---
+
+👉 규칙은 간단하다.
+- 항상 작업 시작 전에는 git pull
+- 작업 후에는 git add . → git commit -m "" → git push

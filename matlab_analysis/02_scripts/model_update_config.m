@@ -9,6 +9,6 @@ function config = model_update_config()
     config.new_model_file = 'myEnsembleModel_v2.mat'; 
 
     % 2. 안드로이드 프로젝트의 'cpp' 폴더 절대 경로를 입력하세요.
-    config.android_cpp_prediction_path = 'C:\Users\SeokHoLee\StudioProjects\GeunHwang\app\src\main\cpp\prediction';
+    config.prediction_folder_path = 'C:\Users\dltjr\AndroidStudioProjects\GeunHwang\app\src\main\cpp\prediction';
 
 end

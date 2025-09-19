@@ -68,13 +68,13 @@ if exist(codegen_folder, 'dir')
     rmdir(codegen_folder, 's');
 end
 sample_input = coder.typeof(double(0), [1, 32], [0, 0]);
-codegen predict_exercise -config coder.config('lib') -args {sample_input} -nargout 0;
+codegen predict_exercise_index -config coder.config('lib') -args {sample_input};
 fprintf('    - 예측 관련 C/C++ 코드 생성 완료.\n\n');
 
 
 %% --- 3. 안드로이드 'prediction' 폴더 업데이트 ---
 fprintf('--- 3. 안드로이드 "prediction" 폴더 업데이트 시작 ---\n');
-predict_codegen_path = fullfile(codegen_folder, 'lib', 'predict_exercise');
+predict_codegen_path = fullfile(codegen_folder, 'lib', 'predict_exercise_index');
 if ~exist(config.prediction_folder_path, 'dir')
     error("타겟 폴더 '%s'를 찾을 수 없습니다. 경로를 확인해주세요.", config.prediction_folder_path);
 end

@@ -2,7 +2,7 @@
 ## Makefile generated for component 'predict_exercise_index'. 
 ## 
 ## Makefile     : predict_exercise_index_rtw.mk
-## Generated on : Fri Sep 19 12:11:41 2025
+## Generated on : Tue Oct 28 11:31:44 2025
 ## Final product: ./predict_exercise_index.lib
 ## Product type : static-library
 ## 
@@ -24,7 +24,7 @@ MAKEFILE                  = predict_exercise_index_rtw.mk
 MATLAB_ROOT               = C:/PROGRA~1/MATLAB/R2025a
 MATLAB_BIN                = C:/PROGRA~1/MATLAB/R2025a/bin
 MATLAB_ARCH_BIN           = $(MATLAB_BIN)/win64
-START_DIR                 = C:/Users/dltjr/OneDrive/Desktop/git/Project-GH/matlab_analysis/02_scripts
+START_DIR                 = C:/Users/SeokHoLee/Desktop/Git/Project_GH/matlab_analysis/02_scripts
 TGT_FCN_LIB               = ISO_C
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0

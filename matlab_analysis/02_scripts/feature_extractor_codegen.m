@@ -8,21 +8,9 @@
 %   'feature_extractor_elite.m'에서 C++ 코드 생성이 가능한 순수 계산
 %   로직만을 추출한 버전. 파일 입출력, UI, 지원되지 않는 함수 제거.
 %   샘플링 주파수(Fs)를 동적 입력으로 받아 처리하도록 수정됨.
-%   ARM에서 동작하게 설정.
 %
 %   INPUT_ARGS = {coder.typeof(0, [Inf, 6], [1, 0]), coder.typeof(0)};
 %   codegen feature_extractor_codegen -args INPUT_ARGS -config:lib -lang:c -report
-%
-% === 1. 입력 타입 정의 ===
-%   INPUT_ARGS = {coder.typeof(0, [Inf, 6], [1, 0]), coder.typeof(0)};
-% === 2. 설정 객체 생성 ===
-%   cfg = coder.config('lib');        % 정적/동적 라이브러리 생성용 설정
-%   cfg.GenerateReport = true;        % 코드 생성 리포트 만들기
-%   cfg.EnableOpenMP = false;         % OpenMP 끄기 (JNI 빌드에서 충돌 방지)
-% === 3. 타겟 하드웨어를 ARM으로 명시 ===
-%   cfg.HardwareImplementation.ProdHWDeviceType = 'ARM Compatible->ARM Cortex';
-% === 4. 코드 생성 실행 ===
-%   codegen feature_extractor_codegen -args INPUT_ARGS -config cfg -lang:c
 %
 % =========================================================================
 function features = feature_extractor_codegen(raw_data, Fs_actual)

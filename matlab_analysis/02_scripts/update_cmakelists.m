@@ -10,8 +10,10 @@
 function update_cmakelists()
 
     % --- Android Studio cpp 디렉토리 절대경로 ---
-    cppDir = 'C:\Users\dltjr\AndroidStudioProjects\GeunHwang\app\src\main\cpp';
-    
+    % Desktop
+    %cppDir = 'C:\Users\dltjr\AndroidStudioProjects\GeunHwang\app\src\main\cpp';
+    % Laptop
+    cppDir = 'C:\Users\SeokHoLee\StudioProjects\GeunHwang\app\src\main\cpp';
     % --- 타겟 서브폴더 ---
     featureDir = fullfile(cppDir, 'features');
     predictionDir = fullfile(cppDir, 'prediction');
